@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17.3
+    container_name: student
+    environment:
+      - POSTGRES_DB=student
+      - POSTGRES_USER=student
+      - POSTGRES_PASSWORD=student
+    ports:
+      - "5432:5432"
+    volumes:
+      - student_data:/var/lib/postgresql/data
+
+volumes:
+  student_data:
