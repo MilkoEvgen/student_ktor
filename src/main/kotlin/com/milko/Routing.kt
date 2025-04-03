@@ -1,4 +1,4 @@
-package com.milko
+package com.milko.com.milko
 
 import com.milko.rest.courseRoutes
 import com.milko.rest.departmentRoutes

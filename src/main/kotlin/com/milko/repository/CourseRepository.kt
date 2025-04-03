@@ -1,18 +1,15 @@
 package com.milko.repository
 
 import com.milko.dao.CourseDAO
-import com.milko.dao.StudentDAO
 import com.milko.dsl.CourseStudent
 import com.milko.dsl.Courses
 import com.milko.dsl.Teachers
 import com.milko.exceptions.EntityNotFoundException
 import com.milko.model.Course
-import com.milko.model.Student
 import com.milko.model.Teacher
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class CourseRepository {
     suspend fun create(course: Course): Long {

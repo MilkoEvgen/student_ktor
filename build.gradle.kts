@@ -27,8 +27,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-config-yaml")
-    implementation("io.ktor:ktor-server-content-negotiation:2.3.1")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.1")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
+    implementation("io.ktor:ktor-server-content-negotiation:3.0.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
     implementation("io.ktor:ktor-server-status-pages")
 
 
@@ -40,6 +41,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:6.2.1")
     implementation("org.flywaydb:flyway-core:11.3.1")
     implementation("org.flywaydb:flyway-database-postgresql:11.3.1")
+    testImplementation("org.testcontainers:postgresql:1.19.3")
 
 
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
@@ -49,5 +51,23 @@ dependencies {
     implementation("io.insert-koin:koin-logger-slf4j:3.4.0")
 
     testImplementation("io.ktor:ktor-server-test-host")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    // JUnit 5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+
+    // Kotlin тест
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+
+    // MockK
+    testImplementation("io.mockk:mockk:1.13.10")
+
+    // Корутины тесты
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }
+
+tasks.test {
+    maxParallelForks = 1
+    useJUnitPlatform()
+}
+

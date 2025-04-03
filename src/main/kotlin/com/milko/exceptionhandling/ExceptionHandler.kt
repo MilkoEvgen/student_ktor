@@ -1,14 +1,16 @@
 package com.milko.exceptionhandling
 
 import com.milko.exceptions.EntityNotFoundException
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.request.path
+import io.ktor.server.response.respond
 
 fun Application.configureExceptionHandling() {
     install(StatusPages) {
+
         exception<EntityNotFoundException> { call, cause ->
             call.respond(
                 HttpStatusCode.NotFound,

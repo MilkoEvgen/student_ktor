@@ -4,15 +4,10 @@ import com.milko.dao.StudentDAO
 import com.milko.dsl.CourseStudent
 import com.milko.dsl.Courses
 import com.milko.dsl.Students
-import com.milko.dsl.Teachers
 import com.milko.exceptions.EntityNotFoundException
-import com.milko.model.Course
 import com.milko.model.Student
-import com.milko.model.Teacher
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class StudentRepository {
 

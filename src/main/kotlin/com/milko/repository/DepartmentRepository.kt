@@ -1,15 +1,11 @@
 package com.milko.repository
 
-import com.milko.dao.CourseDAO
 import com.milko.dao.DepartmentDAO
-import com.milko.dsl.Courses
 import com.milko.dsl.Departments
 import com.milko.dsl.Teachers
 import com.milko.exceptions.EntityNotFoundException
-import com.milko.model.Course
 import com.milko.model.Department
 import com.milko.model.Teacher
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction

@@ -2,10 +2,11 @@ package com.milko.service
 
 import com.milko.dto.request.TeacherRequestDto
 import com.milko.dto.response.TeacherResponseDto
-import com.milko.mapper.*
+import com.milko.mapper.toCourseResponse
+import com.milko.mapper.toTeacher
+import com.milko.mapper.toTeacherResponse
 import com.milko.repository.CourseRepository
 import com.milko.repository.TeacherRepository
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class TeacherService(
     private val teacherRepository: TeacherRepository,
@@ -13,7 +14,7 @@ class TeacherService(
 ) {
 
     suspend fun create(teacherRequestDto: TeacherRequestDto): TeacherResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val teacher = teacherRequestDto.toTeacher()
             val teacherId = teacherRepository.create(teacher)
             teacherRequestDto.toTeacherResponse(teacherId)
@@ -21,7 +22,7 @@ class TeacherService(
     }
 
     suspend fun update(id: Long, teacherRequestDto: TeacherRequestDto): TeacherResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             teacherRepository.throwExceptionIfNotExists(id)
             val teacher = teacherRequestDto.toTeacher(id)
             teacherRepository.update(teacher)
@@ -30,7 +31,7 @@ class TeacherService(
     }
 
     suspend fun findById(teacherId: Long): TeacherResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val teacher = teacherRepository.findByIdOrThrowExceptionIfNotExists(teacherId)
             val courses = courseRepository.getCoursesByTeacherId(teacherId)
             val courseResponseDtos = courses.map { course -> course.toCourseResponse(null) }
@@ -39,7 +40,7 @@ class TeacherService(
     }
 
     suspend fun findAll(): List<TeacherResponseDto> {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val teachers = teacherRepository.findAll()
             val teacherIds = teachers.map { it.id }
             val coursesByTeachers = courseRepository.getCoursesByTeacherIds(teacherIds)
@@ -52,7 +53,7 @@ class TeacherService(
     }
 
     suspend fun delete(teacherId: Long) {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             teacherRepository.deleteById(teacherId)
         }
     }

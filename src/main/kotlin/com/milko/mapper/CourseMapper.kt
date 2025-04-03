@@ -1,11 +1,9 @@
 package com.milko.mapper
 
 import com.milko.dto.request.CourseRequestDto
-import com.milko.dto.request.StudentRequestDto
 import com.milko.dto.response.CourseResponseDto
 import com.milko.dto.response.StudentResponseDto
 import com.milko.model.Course
-import com.milko.model.Student
 
 
 fun CourseRequestDto.toCourse(id: Long? = null): Course {

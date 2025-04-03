@@ -51,7 +51,6 @@ class StudentService(
         }
     }
 
-
     suspend fun findAllCoursesByStudentId(id: Long): List<CourseResponseDto> {
         val courses = courseRepository.getCoursesByStudentId(id)
         return courses.map { it.toCourseResponse(null) }

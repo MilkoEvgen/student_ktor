@@ -7,7 +7,6 @@ import com.milko.mapper.toDepartment
 import com.milko.mapper.toDepartmentResponse
 import com.milko.repository.DepartmentRepository
 import com.milko.repository.TeacherRepository
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
 
 class DepartmentService(
@@ -16,7 +15,7 @@ class DepartmentService(
 ) {
 
     suspend fun create(departmentRequestDto: DepartmentRequestDto): DepartmentResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val department = departmentRequestDto.toDepartment()
             val departmentId = departmentRepository.create(department)
             departmentRequestDto.toDepartmentResponse(departmentId)
@@ -24,7 +23,7 @@ class DepartmentService(
     }
 
     suspend fun update(id: Long, departmentRequestDto: DepartmentRequestDto): DepartmentResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             departmentRepository.throwExceptionIfNotExists(id)
             val department = departmentRequestDto.toDepartment(id)
             departmentRepository.update(department)
@@ -33,14 +32,14 @@ class DepartmentService(
     }
 
     suspend fun findById(departmentId: Long): DepartmentResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val department = departmentRepository.findByIdOrThrowExceptionIfNotExists(departmentId)
             department.toDepartmentResponse()
         }
     }
 
     suspend fun findAll(): List<DepartmentResponseDto> {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             val departments = departmentRepository.findAll()
 
             departments.map { department ->
@@ -50,21 +49,21 @@ class DepartmentService(
     }
 
     suspend fun delete(departmentId: Long) {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             departmentRepository.deleteById(departmentId)
         }
     }
 
     suspend fun setTeacherToDepartment(departmentId: Long, teacherId: Long): DepartmentResponseDto {
-        return newSuspendedTransaction {
+        return com.milko.utils.dbQuery {
             departmentRepository.throwExceptionIfNotExists(departmentId)
             teacherRepository.throwExceptionIfNotExists(teacherId)
 
-            Departments.update({ Departments.id eq departmentId}) {
+            Departments.update({ Departments.id eq departmentId }) {
                 it[headOfDepartmentId] = teacherId
             }
 
-            return@newSuspendedTransaction findById(departmentId)
+            findById(departmentId)
         }
     }
 }

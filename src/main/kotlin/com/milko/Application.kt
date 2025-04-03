@@ -1,5 +1,6 @@
 package com.milko
 
+import com.milko.com.milko.configureRouting
 import com.milko.exceptionhandling.configureExceptionHandling
 import com.milko.repository.CourseRepository
 import com.milko.repository.DepartmentRepository
@@ -11,9 +12,10 @@ import com.milko.service.StudentService
 import com.milko.service.TeacherService
 import com.milko.utils.DatabaseFactory
 import com.milko.utils.FlywayMigrations
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
